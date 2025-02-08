@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Quotes😇</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #ddd;
+            overflow-x: hidden;
+
+        }
+
+        .main {
+            width: 400px;
+            /* height: 240px; */
+            /* border: 2px solid black; */
+
+            /* overflow: auto; */
+        }
+
+        .main p {
+            margin-left: 52px;
+            /* padding-left: 23px; */
+            text-align: center;
+            margin-top: 10px;
+            border: 2px solid black;
+            width: 300px;
+            padding: 10px;
+            background: #191a1b;
+            font-family: cursive;
+            /* height: 150px; */
+            border-radius: 10px;
+            border: 0;
+            /* margin-bottom: 5px; */
+            display: none;
+        }
+
+        .main h1 {
+            margin-left: 70px;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url(images/flight.jpg);
+            /* background-position: center; */
+            /* background-size: c; */
+            display: flex;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                background-size: cover;
+                background-position: center;
+            }
+        }
+
+        .container button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            border: 0;
+            background: #00b8f0;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="main">
+            <h1>Quote <span style="color: #dd0000;">Generator</span></h1>
+            <p id="quote">
+            </p>
+
+        </div>
+        <button id="button" onclick="generate()">Generate Quote</button>
+    </div>
+    <script>
+        const btn = document.getElementById('button')
+        const displayQuote = document.getElementById('quote')
+        const set = new Set()
+
+
+
+        const quotes = [
+            'You will be successfull one day😀',
+            "Allah is Aware of you💘",
+            "Dont lose hope😢",
+            "You have to do it😯",
+            "you can do it right now😋😍",
+            "Get up and go💪",
+            "Life is 10% what happens to us and 90% how we react to it.",
+            "Do what you can, with what you have, where you are.",
+            "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+            "The best way to predict the future is to create it.",
+            "It does not matter how slowly you go as long as you do not stop.",
+            "Difficulties in life are intended to make us better, not bitter.",
+            "Happiness depends upon ourselves.",
+            "The only limit to our realization of tomorrow is our doubts of today.",
+            "Your time is limited, so don’t waste it living someone else’s life.",
+            "What lies behind us and what lies before us are tiny matters compared to what lies within us.",
+            "Believe you can and you're halfway there.",
+            "Act as if what you do makes a difference. It does.",
+            "With the new day comes new strength and new thoughts.",
+            "Keep your face always toward the sunshine—and shadows will fall behind you.",
+            "It is never too late to be what you might have been.",
+            "In the middle of every difficulty lies opportunity.",
+            "You are never too old to set another goal or to dream a new dream.",
+            "Start where you are. Use what you have. Do what you can.",
+            "The future belongs to those who believe in the beauty of their dreams.",
+            "Don’t watch the clock; do what it does. Keep going.",
+            "We may encounter many defeats but we must not be defeated.",
+            "A winner is a dreamer who never gives up.",
+            "Everything you’ve ever wanted is on the other side of fear.",
+            "Opportunities don’t happen, you create them.",
+            "Hardships often prepare ordinary people for an extraordinary destiny.",
+            "The way to get started is to quit talking and begin doing.",
+            "Your limitation—it’s only your imagination.",
+            "Push yourself, because no one else is going to do it for you.",
+            "Great things never come from comfort zones.",
+            "Dream it. Wish it. Do it.",
+            "Success doesn’t just find you. You have to go out and get it.",
+            "The harder you work for something, the greater you’ll feel when you achieve it.",
+            "Dream bigger. Do bigger.",
+            "Don’t stop when you’re tired. Stop when you’re done.",
+            "Wake up with determination. Go to bed with satisfaction.",
+            "Do something today that your future self will thank you for.",
+            "Little things make big days.",
+            "It’s going to be hard, but hard does not mean impossible.",
+            "Don’t wait for opportunity. Create it.",
+            "Sometimes we’re tested not to show our weaknesses, but to discover our strengths.",
+            "The key to success is to focus on goals, not obstacles.",
+            "Dream it. Believe it. Build it.",
+            "You don’t have to be great to start, but you have to start to be great.",
+            "Believe in yourself and all that you are. Know that there is something inside you that is greater than any obstacle.",
+            "Your only limit is your mind.",
+            "The secret of getting ahead is getting started.",
+            "Doubt kills more dreams than failure ever will.",
+            "Success is getting what you want. Happiness is wanting what you get.",
+            "The only way to do great work is to love what you do.",
+            "You are capable of amazing things.",
+            "Every accomplishment starts with the decision to try.",
+            "Stay hungry. Stay foolish.",
+            "What we achieve inwardly will change outer reality.",
+            "He who has a why to live can bear almost any how.",
+            "It’s not whether you get knocked down, it’s whether you get up.",
+            "I am not a product of my circumstances. I am a product of my decisions.",
+            "Quality means doing it right when no one is looking.",
+            "Success is how high you bounce when you hit bottom.",
+            "Well done is better than well said.",
+            "You miss 100% of the shots you don’t take.",
+            "There is no substitute for hard work.",
+            "I find that the harder I work, the more luck I seem to have.",
+            "Motivation is what gets you started. Habit is what keeps you going.",
+            "The only place where success comes before work is in the dictionary.",
+            "Don’t let what you cannot do interfere with what you can do.",
+            "You can’t use up creativity. The more you use, the more you have.",
+            "Either you run the day or the day runs you.",
+            "Be so good they can’t ignore you.",
+            "Live as if you were to die tomorrow. Learn as if you were to live forever.",
+            "It always seems impossible until it’s done.",
+            "A journey of a thousand miles begins with a single step.",
+            "Success is not the key to happiness. Happiness is the key to success.",
+            "What you get by achieving your goals is not as important as what you become by achieving your goals.",
+            "The only way to do great work is to love what you do.",
+            "Act as if what you do makes a difference. It does.",
+            "Believe you can and you're halfway there.",
+            "Don’t count the days, make the days count.",
+            "We become what we think about.",
+            "All our dreams can come true, if we have the courage to pursue them.",
+            "Do what you feel in your heart to be right—for you’ll be criticized anyway."
+            // Add 90 more unique quotes here...
+        ];
+
+
+
+
+        function generate() {
+            if (set.size >= quotes.length) {
+                set.clear()
+            }
+            while (true) {
+                displayQuote.style.display = 'block'
+                const random = Math.floor(Math.random() * quotes.length)
+                if (set.has(random)) continue
+                const result = quotes[random]
+                displayQuote.innerHTML = result
+                set.add(random)
+                break
+            }
+        }
+    </script>
+</body>
+
+</html>
