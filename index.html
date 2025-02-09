@@ -88,11 +88,20 @@
 
         </div>
         <button id="button" onclick="generate()">Generate Quote</button>
+        <button id="copy" onclick="copyPassword()" style='padding="10px 20px;border="none";background="#00b8f0";cursor="pointer";color="#fff"'>
+            copy</button>
     </div>
     <script>
+        const copy = document.getElementById("copy")
+     
         const btn = document.getElementById('button')
         const displayQuote = document.getElementById('quote')
         const set = new Set()
+
+           function copyPassword() {
+            displayQuote.select()
+            document.execCommand('copy')
+        }
 
 
 
